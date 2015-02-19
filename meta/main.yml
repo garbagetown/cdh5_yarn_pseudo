@@ -1,0 +1,14 @@
+---
+galaxy_info:
+  author: garbagetown
+  description: Install CDH 5 with YARN on a Single Linux Node in Pseudo-distributed mode
+  license: Apache
+  min_ansible_version: 1.8.2
+  platforms:
+    - name: EL
+      versions:
+        - 6
+  categories:
+    - development
+dependencies:
+  - williamyeh.oracle-java 

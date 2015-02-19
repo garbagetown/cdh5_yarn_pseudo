@@ -1,0 +1,38 @@
+---
+# tasks file for garbagetown.cdh5_yarn_pseudo
+
+- name: Create a Local Yum Repository
+  sudo: true
+  command: curl -O http://archive.cloudera.com/cdh5/redhat/6/x86_64/cdh/cloudera-cdh5.repo
+  args:
+    chdir: /etc/yum.repos.d/
+
+- name: Install CDH 5 with YARN on a Single Linux Node in Pseudo-distributed mode
+  sudo: true
+  yum: name=hadoop-conf-pseudo state=present
+
+- name: Format the NameNode
+  sudo_user: hdfs
+  command: hdfs namenode -format -force
+
+- name: Start HDFS
+  sudo: true
+  service: name={{ item }} state=started enabled=yes
+  with_items:
+    - hadoop-hdfs-datanode
+    - hadoop-hdfs-namenode
+    - hadoop-hdfs-secondarynamenode
+
+- name: Remove /user/oozie/share/lib/
+  sudo_user: hdfs
+  command: hadoop fs -rm -f -R /user/oozie/share/lib/
+
+- name: Create the directories needed for Hadoop processes
+  sudo: true
+  command: /usr/lib/hadoop/libexec/init-hdfs.sh
+
+- name: Start YARN
+  sudo: true
+  service: name=hadoop-yarn-resourcemanager state=started enabled=yes
+
+
