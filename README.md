@@ -6,7 +6,7 @@ Install CDH 5 with YARN on a Single Linux Node in Pseudo-distributed mode.
 Requirements
 ------------
 
-- Oracle JDK 7
+None.
 
 Role Variables
 --------------
@@ -16,7 +16,7 @@ None.
 Dependencies
 ------------
 
-None.
+- [williamyeh.oracle-java](https://galaxy.ansible.com/list#/roles/2851)
 
 Example Playbook
 ----------------
@@ -27,6 +27,9 @@ Example Playbook
 
   roles:
     - garbagetown.cdh5_yarn_pseudo
+
+  vars:
+    - java_version: 7
 ```
 
 License
