@@ -17,12 +17,12 @@
 - name: Format the NameNode
   sudo_user: hdfs
   command: hdfs namenode -format
-  when: namenode_metadata is not defined
+  when: namenode_metadata.stat.exists == False
 
 - name: Force Format the NameNode
   sudo_user: hdfs
   command: hdfs namenode -format -force
-  when: namenode_metadata is defined
+  when: namenode_metadata.stat.exists == True
 
 - name: Start HDFS
   sudo: true
