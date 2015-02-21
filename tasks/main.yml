@@ -11,9 +11,18 @@
   sudo: true
   yum: name=hadoop-conf-pseudo state=present
 
+- stat: path=/var/lib/hadoop-hdfs/cache/hdfs/dfs/name
+  register: namenode_metadata
+
 - name: Format the NameNode
   sudo_user: hdfs
+  command: hdfs namenode -format
+  when: namenode_metadata is not defined
+
+- name: Force Format the NameNode
+  sudo_user: hdfs
   command: hdfs namenode -format -force
+  when: namenode_metadata is defined
 
 - name: Start HDFS
   sudo: true
