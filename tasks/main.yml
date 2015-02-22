@@ -44,6 +44,8 @@
 
 - name: Start YARN
   sudo: true
-  service: name=hadoop-yarn-resourcemanager state=started enabled=yes
-
-
+  service: name={{ item }} state=started enabled=yes
+  with_items:
+    - hadoop-yarn-resourcemanager
+    - hadoop-yarn-nodemanager 
+    - hadoop-mapreduce-historyserver
