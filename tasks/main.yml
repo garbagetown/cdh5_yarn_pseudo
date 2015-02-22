@@ -15,11 +15,13 @@
   register: namenode_metadata
 
 - name: Format the NameNode
+  sudo: true
   sudo_user: hdfs
   command: hdfs namenode -format
   when: namenode_metadata.stat.exists == False
 
 - name: Force Format the NameNode
+  sudo: true
   sudo_user: hdfs
   command: hdfs namenode -format -force
   when: namenode_metadata.stat.exists == True
